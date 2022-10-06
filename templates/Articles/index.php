@@ -6,6 +6,7 @@
     <tr>
         <th>タイトル</th>
         <th>作成日時</th>
+        <th>操作</th>
     </tr>
 
     <!-- ここで、$articles クエリーオブジェクトを繰り返して、記事の情報を出力します -->
@@ -16,6 +17,9 @@
             </td>
             <td>
                 <?= $article->created->format(DATE_RFC850) ?>
+            </td>
+            <td>
+                <?= $this->Html->link('編集', ['action' => 'edit', $article->slug]) ?>
             </td>
         </tr>
     <?php endforeach; ?>
