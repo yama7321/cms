@@ -3,7 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
-use Cake\Utilit\Text;
+use Cake\Utility\Text;
 use Cake\Event\EventInterface;
 
 
