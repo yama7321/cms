@@ -22,7 +22,10 @@ class ArticlesController extends AppController
 
     public function view($slug = null)
     {
-        $article = $this->Articles->findBySlug($slug)->firstOrFail();
+        $article = $this->Articles
+            ->findBySlug($slug)
+            ->contain('Tags')
+            ->firstOrFail();
         $this->set(compact('article'));
     }
 
@@ -80,5 +83,23 @@ class ArticlesController extends AppController
             $this->Flash->success(__('The {0} article has been deleted.', $article->title));
             return $this->redirect(['action' => 'index']);
         }
+    }
+
+    public function tags(...$tags)
+    {
+        // 'pass' キーは CakePHP によって提供され、リクエストに渡された
+        // 全ての URL パスセグメントを含みます。
+        // $tags = $this->request->getParam('pass');
+
+        // ArticlesTable を使用してタグ付きの記事を検索します。
+        $articles = $this->Articles->find('tagged', [
+            'tags' => $tags
+        ])->all();
+
+        // 変数をビューテンプレートのコンテキストに渡します。
+        $this->set([
+            'articles' => $articles,
+            'tags' => $tags
+        ]);
     }
 }
